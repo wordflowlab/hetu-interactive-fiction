@@ -1,0 +1,12 @@
+{
+  "host": {
+    "version": "0.11.11",
+    "git_sha": "6053f973a6740b6f4d7fca1bd69452b2bac3fa46",
+    "archive_sha256": "4df6c60e28b2627c031c0c9a4655d57aa85b8211ad33bc2bdca0fa635189f91d"
+  },
+  "plugin": {
+    "slug": "interactive-fiction",
+    "version": "0.1.0",
+    "package_sha256": "c777120519a56fd93d1e132c078ac99b5a65f19103070a088b1cedf8f74e0a00"
+  }
+}
