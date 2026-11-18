@@ -1,8 +1,8 @@
 {
   "date": "2026-11-18",
   "plugin_id": "org.wordflowlab.interactive-fiction",
-  "package_sha256": "e86e345cc74c12b9c4fd770832c047f0d734495806af6a04637474a491440e39",
-  "host_version": "hetu 0.11.7",
+  "package_sha256": "c777120519a56fd93d1e132c078ac99b5a65f19103070a088b1cedf8f74e0a00",
+  "host_version": "hetu 0.11.11",
   "platform": "darwin",
   "architecture": "arm64",
   "tabs": [
