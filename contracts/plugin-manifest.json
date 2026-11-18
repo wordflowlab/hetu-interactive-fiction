@@ -1,0 +1,1788 @@
+{
+  "manifest_version": 1,
+  "host_api": "1",
+  "id": "org.wordflowlab.interactive-fiction",
+  "version": "0.1.0",
+  "display": {
+    "zh-CN": "互动叙事",
+    "en": "Interactive Fiction"
+  },
+  "description": {
+    "zh-CN": "将固定故事组织成可检查、试玩、存档和交付的分支叙事工程。",
+    "en": "Interactive Fiction with fixed sources and external Agent workflows."
+  },
+  "license": "Apache-2.0",
+  "dependencies": [],
+  "work_kinds": [
+    "novel"
+  ],
+  "runtime": {
+    "entry": "backend.mjs"
+  },
+  "contributions": {
+    "views": [
+      {
+        "id": "main",
+        "title": "互动叙事",
+        "entry": "index.html",
+        "object_kinds": [
+          "interactive_fiction"
+        ],
+        "navigation": "integrated"
+      }
+    ],
+    "data": [
+      {
+        "kind": "interactive_fiction",
+        "schema_version": "1.0.0",
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "format_version": {
+              "const": 1
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "variables": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "number",
+                      "boolean",
+                      "string"
+                    ]
+                  },
+                  "initial": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 4000
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "type",
+                  "initial"
+                ]
+              },
+              "maxItems": 300
+            },
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 0,
+                    "maxLength": 20000
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "scene",
+                      "ending"
+                    ]
+                  },
+                  "source_index": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 99
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "text",
+                  "kind",
+                  "source_index"
+                ]
+              },
+              "maxItems": 300
+            },
+            "choices": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "from_node": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "to_node": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "variable_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "operator": {
+                          "type": "string",
+                          "enum": [
+                            "eq",
+                            "ne",
+                            "gt",
+                            "gte",
+                            "lt",
+                            "lte"
+                          ]
+                        },
+                        "value": {
+                          "anyOf": [
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "string",
+                              "minLength": 0,
+                              "maxLength": 4000
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "variable_id",
+                        "operator",
+                        "value"
+                      ]
+                    },
+                    "maxItems": 20
+                  },
+                  "effects": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "variable_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "operator": {
+                          "type": "string",
+                          "enum": [
+                            "set",
+                            "add"
+                          ]
+                        },
+                        "value": {
+                          "anyOf": [
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "string",
+                              "minLength": 0,
+                              "maxLength": 4000
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "variable_id",
+                        "operator",
+                        "value"
+                      ]
+                    },
+                    "maxItems": 20
+                  }
+                },
+                "required": [
+                  "id",
+                  "from_node",
+                  "to_node",
+                  "label",
+                  "conditions",
+                  "effects"
+                ]
+              },
+              "maxItems": 300
+            },
+            "saves": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "story_sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "choice_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100
+                    },
+                    "maxItems": 500
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "story_sha256",
+                  "choice_ids"
+                ]
+              },
+              "maxItems": 300
+            },
+            "entry_node": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "basis_refs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "owner_plugin_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "object_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "owner_plugin_id",
+                  "object_id",
+                  "revision",
+                  "sha256"
+                ]
+              },
+              "maxItems": 20
+            }
+          },
+          "required": [
+            "format_version",
+            "title",
+            "variables",
+            "nodes",
+            "choices",
+            "saves",
+            "entry_node",
+            "basis_refs"
+          ]
+        }
+      }
+    ],
+    "actions": [
+      {
+        "id": "list_projects",
+        "title": "查找专业工程",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "query": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1000
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "cursor": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 4000
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "id": "get_project",
+        "title": "读取固定专业工程",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "object_id"
+          ]
+        }
+      },
+      {
+        "id": "save_project",
+        "title": "保存完整专业工程",
+        "effect": "managed_write",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "expected_sha256": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 64
+            },
+            "operation_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "source_refs": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "maxItems": 64
+            },
+            "content": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "format_version": {
+                  "const": 1
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "variables": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "number",
+                          "boolean",
+                          "string"
+                        ]
+                      },
+                      "initial": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "string",
+                            "minLength": 0,
+                            "maxLength": 4000
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "title",
+                      "type",
+                      "initial"
+                    ]
+                  },
+                  "maxItems": 300
+                },
+                "nodes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 20000
+                      },
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "scene",
+                          "ending"
+                        ]
+                      },
+                      "source_index": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 99
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "title",
+                      "text",
+                      "kind",
+                      "source_index"
+                    ]
+                  },
+                  "maxItems": 300
+                },
+                "choices": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "from_node": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "to_node": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      },
+                      "conditions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "variable_id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "operator": {
+                              "type": "string",
+                              "enum": [
+                                "eq",
+                                "ne",
+                                "gt",
+                                "gte",
+                                "lt",
+                                "lte"
+                              ]
+                            },
+                            "value": {
+                              "anyOf": [
+                                {
+                                  "type": "number"
+                                },
+                                {
+                                  "type": "boolean"
+                                },
+                                {
+                                  "type": "string",
+                                  "minLength": 0,
+                                  "maxLength": 4000
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "variable_id",
+                            "operator",
+                            "value"
+                          ]
+                        },
+                        "maxItems": 20
+                      },
+                      "effects": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "variable_id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "operator": {
+                              "type": "string",
+                              "enum": [
+                                "set",
+                                "add"
+                              ]
+                            },
+                            "value": {
+                              "anyOf": [
+                                {
+                                  "type": "number"
+                                },
+                                {
+                                  "type": "boolean"
+                                },
+                                {
+                                  "type": "string",
+                                  "minLength": 0,
+                                  "maxLength": 4000
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "variable_id",
+                            "operator",
+                            "value"
+                          ]
+                        },
+                        "maxItems": 20
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "from_node",
+                      "to_node",
+                      "label",
+                      "conditions",
+                      "effects"
+                    ]
+                  },
+                  "maxItems": 300
+                },
+                "saves": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "story_sha256": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "choice_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "maxItems": 500
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "title",
+                      "story_sha256",
+                      "choice_ids"
+                    ]
+                  },
+                  "maxItems": 300
+                },
+                "entry_node": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "basis_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "owner_plugin_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 120
+                      },
+                      "object_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "revision": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      }
+                    },
+                    "required": [
+                      "owner_plugin_id",
+                      "object_id",
+                      "revision",
+                      "sha256"
+                    ]
+                  },
+                  "maxItems": 20
+                }
+              },
+              "required": [
+                "format_version",
+                "title",
+                "variables",
+                "nodes",
+                "choices",
+                "saves",
+                "entry_node",
+                "basis_refs"
+              ]
+            }
+          },
+          "required": [
+            "expected_revision",
+            "expected_sha256",
+            "operation_key",
+            "content"
+          ]
+        }
+      },
+      {
+        "id": "put_variable",
+        "title": "维护叙事变量",
+        "effect": "managed_write",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "expected_sha256": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 64
+            },
+            "operation_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "source_refs": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "maxItems": 64
+            },
+            "variable": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "number",
+                    "boolean",
+                    "string"
+                  ]
+                },
+                "initial": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "string",
+                      "minLength": 0,
+                      "maxLength": 4000
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "type",
+                "initial"
+              ]
+            }
+          },
+          "required": [
+            "object_id",
+            "expected_revision",
+            "expected_sha256",
+            "operation_key",
+            "variable"
+          ]
+        }
+      },
+      {
+        "id": "remove_variable",
+        "title": "移除叙事变量",
+        "effect": "managed_write",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "expected_sha256": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 64
+            },
+            "operation_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "source_refs": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "maxItems": 64
+            },
+            "variable_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "object_id",
+            "expected_revision",
+            "expected_sha256",
+            "operation_key",
+            "variable_id"
+          ]
+        }
+      },
+      {
+        "id": "put_node",
+        "title": "维护故事节点",
+        "effect": "managed_write",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "expected_sha256": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 64
+            },
+            "operation_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "source_refs": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "maxItems": 64
+            },
+            "node": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 20000
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "scene",
+                    "ending"
+                  ]
+                },
+                "source_index": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 99
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "text",
+                "kind",
+                "source_index"
+              ]
+            }
+          },
+          "required": [
+            "object_id",
+            "expected_revision",
+            "expected_sha256",
+            "operation_key",
+            "node"
+          ]
+        }
+      },
+      {
+        "id": "remove_node",
+        "title": "移除故事节点",
+        "effect": "managed_write",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "expected_sha256": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 64
+            },
+            "operation_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "source_refs": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "maxItems": 64
+            },
+            "node_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "object_id",
+            "expected_revision",
+            "expected_sha256",
+            "operation_key",
+            "node_id"
+          ]
+        }
+      },
+      {
+        "id": "put_choice",
+        "title": "维护分支选项",
+        "effect": "managed_write",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "expected_sha256": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 64
+            },
+            "operation_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "source_refs": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "maxItems": 64
+            },
+            "choice": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "from_node": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "to_node": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "conditions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "variable_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "operator": {
+                        "type": "string",
+                        "enum": [
+                          "eq",
+                          "ne",
+                          "gt",
+                          "gte",
+                          "lt",
+                          "lte"
+                        ]
+                      },
+                      "value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "string",
+                            "minLength": 0,
+                            "maxLength": 4000
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "variable_id",
+                      "operator",
+                      "value"
+                    ]
+                  },
+                  "maxItems": 20
+                },
+                "effects": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "variable_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "operator": {
+                        "type": "string",
+                        "enum": [
+                          "set",
+                          "add"
+                        ]
+                      },
+                      "value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "string",
+                            "minLength": 0,
+                            "maxLength": 4000
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "variable_id",
+                      "operator",
+                      "value"
+                    ]
+                  },
+                  "maxItems": 20
+                }
+              },
+              "required": [
+                "id",
+                "from_node",
+                "to_node",
+                "label",
+                "conditions",
+                "effects"
+              ]
+            }
+          },
+          "required": [
+            "object_id",
+            "expected_revision",
+            "expected_sha256",
+            "operation_key",
+            "choice"
+          ]
+        }
+      },
+      {
+        "id": "remove_choice",
+        "title": "移除分支选项",
+        "effect": "managed_write",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "expected_sha256": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 64
+            },
+            "operation_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "source_refs": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "maxItems": 64
+            },
+            "choice_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "object_id",
+            "expected_revision",
+            "expected_sha256",
+            "operation_key",
+            "choice_id"
+          ]
+        }
+      },
+      {
+        "id": "put_save",
+        "title": "维护工程存档",
+        "effect": "managed_write",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "expected_sha256": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 64
+            },
+            "operation_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "source_refs": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "maxItems": 64
+            },
+            "save": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "story_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "choice_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "maxItems": 500
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "story_sha256",
+                "choice_ids"
+              ]
+            }
+          },
+          "required": [
+            "object_id",
+            "expected_revision",
+            "expected_sha256",
+            "operation_key",
+            "save"
+          ]
+        }
+      },
+      {
+        "id": "remove_save",
+        "title": "移除工程存档",
+        "effect": "managed_write",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "expected_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "expected_sha256": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 64
+            },
+            "operation_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "source_refs": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "maxItems": 64
+            },
+            "save_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "object_id",
+            "expected_revision",
+            "expected_sha256",
+            "operation_key",
+            "save_id"
+          ]
+        }
+      },
+      {
+        "id": "check_graph",
+        "title": "检查分支与结局",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "object_id"
+          ]
+        }
+      },
+      {
+        "id": "play_route",
+        "title": "确定性试玩路线",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "choice_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "maxItems": 500
+            }
+          },
+          "required": [
+            "object_id",
+            "choice_ids"
+          ]
+        }
+      },
+      {
+        "id": "replay_save",
+        "title": "回放固定工程存档",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "save_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "object_id",
+            "save_id"
+          ]
+        }
+      },
+      {
+        "id": "export_player",
+        "title": "编译离线互动网页",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "max_bytes": {
+              "type": "integer",
+              "minimum": 4,
+              "maximum": 100000
+            }
+          },
+          "required": [
+            "object_id"
+          ]
+        }
+      },
+      {
+        "id": "get_source",
+        "title": "读取固定来源",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "source_index": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 63
+            }
+          },
+          "required": [
+            "object_id",
+            "source_index"
+          ]
+        }
+      },
+      {
+        "id": "get_basis",
+        "title": "读取固定上游专业依据",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "basis_index": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 19
+            }
+          },
+          "required": [
+            "object_id",
+            "basis_index"
+          ]
+        }
+      },
+      {
+        "id": "compare_versions",
+        "title": "比较专业修订",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "from_revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "to_revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "object_id",
+            "from_revision",
+            "to_revision"
+          ]
+        }
+      },
+      {
+        "id": "export_project",
+        "title": "导出固定专业报告",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "format": {
+              "type": "string",
+              "enum": [
+                "json",
+                "markdown",
+                "html"
+              ]
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4000000
+            },
+            "max_bytes": {
+              "type": "integer",
+              "minimum": 4,
+              "maximum": 100000
+            }
+          },
+          "required": [
+            "object_id",
+            "format"
+          ]
+        }
+      },
+      {
+        "id": "build_context",
+        "title": "准备有界专业上下文",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "goal": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            },
+            "max_chars": {
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 200000
+            }
+          },
+          "required": [
+            "object_id",
+            "goal",
+            "max_chars"
+          ]
+        }
+      },
+      {
+        "id": "create_handoff",
+        "title": "生成固定专业交接",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "goal": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            }
+          },
+          "required": [
+            "object_id",
+            "goal"
+          ]
+        }
+      },
+      {
+        "id": "get_operation",
+        "title": "沿原键回读操作",
+        "effect": "read",
+        "input_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "operation_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "required": [
+            "operation_key"
+          ]
+        }
+      }
+    ],
+    "skills": [
+      {
+        "id": "interactive-fiction",
+        "name": "hetu-interactive-fiction",
+        "description": "将固定故事组织成可检查、试玩、存档和交付的分支叙事工程。",
+        "entry": "skills/hetu-interactive-fiction/SKILL.md"
+      }
+    ]
+  }
+}

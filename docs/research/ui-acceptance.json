@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-18",
+  "plugin_id": "org.wordflowlab.interactive-fiction",
+  "package_sha256": "e86e345cc74c12b9c4fd770832c047f0d734495806af6a04637474a491440e39",
+  "host_version": "hetu 0.11.7",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "tabs": [
+    "故事节点",
+    "分支检查",
+    "路线试玩",
+    "存档回放",
+    "接续创作"
+  ],
+  "empty_state": true,
+  "professional_actions": true,
+  "artifact_files": [],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "widths": [
+    1360,
+    760
+  ],
+  "reduced_transparency": true,
+  "CAS_preserves_input": true,
+  "explicit_rebase": true,
+  "close_reopen": true,
+  "dirty_buffer_restore": true,
+  "page_errors": [],
+  "limits": [
+    "原生窗口材质、系统输入法及Windows/Linux未由本测试证明"
+  ]
+}

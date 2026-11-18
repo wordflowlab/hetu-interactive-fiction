@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-18",
+  "plugin_id": "org.wordflowlab.interactive-fiction",
+  "version": "0.1.0",
+  "package_sha256": "e86e345cc74c12b9c4fd770832c047f0d734495806af6a04637474a491440e39",
+  "host_version": "hetu 0.11.7",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "actions": [
+    "save_project",
+    "put_variable",
+    "put_node",
+    "put_choice",
+    "list_projects",
+    "get_source",
+    "get_operation",
+    "get_basis",
+    "check_graph",
+    "play_route",
+    "put_save",
+    "replay_save",
+    "export_player",
+    "get_project",
+    "build_context",
+    "create_handoff",
+    "compare_versions",
+    "export_project",
+    "remove_save",
+    "remove_choice",
+    "remove_node",
+    "remove_variable"
+  ],
+  "expected_rejections": [],
+  "skill_resources": 3,
+  "lifecycle": [
+    "install",
+    "disable",
+    "enable",
+    "uninstall",
+    "install"
+  ],
+  "fixed_history": true,
+  "CAS": true,
+  "original_key_recovery": true,
+  "artifact_sha256_verified": true,
+  "limits": [
+    "跨平台、真实创作质量、正文采纳、定稿和付费模型未在本用例验收"
+  ]
+}

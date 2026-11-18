@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-18",
+  "references": [
+    {
+      "repository": "baisama-cloud/dsh-galgame-generator",
+      "commit": "276974e36a89dbaf07d9a7d4208d980088741160",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "b8193196e701112c6e813fbe1fb91b3aa9e81fa29291ab13b1f1319b856a4ccd"
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "9a44b95ac2ef20c6a9ee6af70d50551d94cfb07baa77182b53100e24974f36c0"
+        },
+        {
+          "path": "package.json",
+          "sha256": "a807d4ce6794cbdd25d0512816b2f7c27a87edebaa2936891e91b5e66e3ee74d"
+        },
+        {
+          "path": "lib/index.js",
+          "sha256": "05e4590cfcd593bf0c6faff30a1d9eabe9b8f867a9fb08b62c77d7e5ac3c5425"
+        },
+        {
+          "path": "lib/client.js",
+          "sha256": "e7f39c88be39e7abed71d12bb8569a146103aa1ab75d90e830c68c8a61dab771"
+        }
+      ],
+      "source_only": true
+    },
+    {
+      "repository": "CHET-LI/DSH-galgame-galbook",
+      "commit": "5951da0f38b99eaecb5d4250e35fb829ef4bc988",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "2dd46f647c72801e816f6e4efd1508cb85873afac4291125b2db1948f7c4be2d"
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "a0b79d6f13b9b5015f8157f4b55ee75f7d6aa7cba9b0e30137f8cc893968790a"
+        },
+        {
+          "path": "package.json",
+          "sha256": "146aaccc239b37015f33775f532a535e9ab419c39d4ee45cc2f334c00ee1c147"
+        },
+        {
+          "path": "galbook/engine.py",
+          "sha256": "7fb7ee9891c7488b23abc8de1e302a869ee55666b3073c536f691dcbd979a2a1"
+        },
+        {
+          "path": "galbook/store.py",
+          "sha256": "0e8015a4fb25f3ae3ef8478de7121d46e6bf65cf1a997657bdb39adf9f8e0bbe"
+        }
+      ],
+      "source_only": true
+    }
+  ],
+  "scope": "已逐个克隆的固定research base；方法与格式参考；不执行上游安装、测试或模型。"
+}
